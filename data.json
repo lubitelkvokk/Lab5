@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "name": "Lunatics",
+    "coordinates": {
+      "x": 5,
+      "y": 8
+    },
+    "creationDate": {
+      "zone": null,
+      "offset": null,
+      "dateTime": null
+    }
+  },
+  {
+    "id": 2,
+    "name": "Shorties",
+    "coordinates": {
+      "x": 25,
+      "y": 81
+    },
+    "creationDate": {
+      "zone": null,
+      "offset": null,
+      "dateTime": null
+    }
+  }
+]

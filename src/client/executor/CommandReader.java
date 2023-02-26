@@ -24,11 +24,17 @@ public class CommandReader {
 
     public void runInteractiveMode() throws IOException {
         String command = "";
-        while (command != "exit") {
-            command = reader.readCommand();
-            receiver.runCommand(command);
+        try {
+            while (command != "exit") {
+                command = reader.readCommand();
+                receiver.runCommand(command);
+            }
+        }
+        catch (IOException e){
+            System.out.println(e.getMessage());
         }
     }
+
 
 
 }

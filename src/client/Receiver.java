@@ -58,8 +58,4 @@ public class Receiver {
         return null;
     }
 
-    public void exit() {
-        System.out.println("-------END--------");
-        System.exit(1);
-    }
 }

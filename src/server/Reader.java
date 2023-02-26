@@ -1,5 +1,7 @@
 package server;
 
+import client.Receiver;
+import client.executor.CommandReader;
 import data.*;
 import data.exceptions.CrossingIdException;
 import data.exceptions.IdException;
@@ -49,6 +51,20 @@ public class Reader {
         }
         return s.split("\n")[0];
     }
+
+    public void readScript(String path) {
+        try {
+            bf = new BufferedInputStream(new FileInputStream(path));
+            Receiver user = new Receiver(GlobalParmatters.commands, GlobalParmatters.cM);
+            CommandReader commandReader = new CommandReader(user, GlobalParmatters.reader);
+            commandReader.runInteractiveMode();
+            bf = new BufferedInputStream(System.in);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
 
     public StudyGroup readElement() throws IOException {
 //        String str = readLine().trim();
@@ -169,7 +185,7 @@ public class Reader {
             str += point;
             point = (char) bf.read();
         }
-        while ((97 <= (int) point && (int) point <= 149) || (String.valueOf(point) == "_")) {
+        while ((97 <= (int) point && (int) point <= 149) || (String.valueOf(point).equals("_"))) {
             str += point;
             point = (char) bf.read();
         }

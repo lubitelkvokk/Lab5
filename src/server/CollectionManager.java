@@ -1,5 +1,7 @@
 package server;
 
+import client.Receiver;
+import client.executor.CommandReader;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
@@ -11,9 +13,11 @@ import data.exceptions.CrossingIdException;
 import data.exceptions.CrossingPasportIDException;
 import data.exceptions.IdException;
 import data.exceptions.WorldBorderException;
+import global.GlobalParmatters;
 
 import java.io.*;
 import java.lang.reflect.Type;
+import java.util.Collections;
 import java.util.LinkedList;
 
 public class CollectionManager {
@@ -186,9 +190,74 @@ public class CollectionManager {
             BufferedWriter bf = new BufferedWriter(new FileWriter("C:\\Users\\Alex\\IdeaProjects\\Lab5\\result.json"));
             bf.write(gson.toJson(studyGroups));
             bf.close();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public void executeScript() {
+        try {
+            reader.readScript(reader.readLine());
+
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void exit() {
+        System.out.println("-------END--------");
+        try {
+            reader.bf.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        //System.exit(1);
+    }
+
+    public void removeFirst() {
+        if (studyGroups.size() == 0) {
+            System.out.println("Коллекция уже пустая");
+        } else {
+            studyGroups.remove(0);
+        }
+
+    }
+
+    public void addIfMin() {
+        try {
+            StudyGroup studyGroup = reader.readElement();
+            if (studyGroup.compareTo(Collections.min(studyGroups)) < 0) {
+                studyGroups.add(studyGroup);
+            } else {
+                System.out.println("Этот элемент не минимальный");
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    public void remove_greater() {
+        try {
+            StudyGroup studyGroup = reader.readElement();
+            for (int x = 0; x < studyGroups.size(); ++x) {
+                if (studyGroups.get(x).compareTo(studyGroup) > 0) {
+                    studyGroups.remove(x);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void sumExpelled() {
+        long sum = 0;
+        for (StudyGroup x : studyGroups) {
+            sum += x.getShouldBeExpelled();
+        }
+        System.out.println(sum);
     }
 }

@@ -10,11 +10,8 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        Command[] commands = new Command[]{new HelpCommand(), new AddCommand(),
-                new InfoCommand(), new UpdateCommand(), new RemoveCommand(),
-                new ClearCommand(), new SaveCommand()};
 
-        Receiver user = new Receiver(commands, GlobalParmatters.cM);
+        Receiver user = new Receiver(GlobalParmatters.commands, GlobalParmatters.cM);
         CommandReader commandReader = new CommandReader(user, GlobalParmatters.reader);
         commandReader.runInteractiveMode();
 

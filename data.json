@@ -1,28 +1,27 @@
 [
   {
-    "id": 1,
-    "name": "Lunatics",
-    "coordinates": {
-      "x": 5,
-      "y": 8
-    },
-    "creationDate": {
-      "zone": null,
-      "offset": null,
-      "dateTime": null
-    }
-  },
-  {
-    "id": 2,
-    "name": "Shorties",
+    "id": 3,
+    "name": "PopIT",
     "coordinates": {
       "x": 25,
-      "y": 81
+      "y": -110.0
     },
-    "creationDate": {
-      "zone": null,
-      "offset": null,
-      "dateTime": null
-    }
+    "creationDate": "2023-02-23T18:21:35.597551+03:00[Europe/Moscow]",
+    "groupAdmin": {
+      "name": "Andrew",
+      "height": 185,
+      "weight": 75,
+      "passportID": "13435663773",
+      "location": {
+        "x": 24,
+        "y": 46,
+        "z": 35,
+        "name": "University"
+      }
+    },
+    "studentsCount": 7,
+    "shouldBeExpelled": 8,
+    "transferredStudents": 7,
+    "semesterEnum": "SECOND"
   }
 ]

@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class CrossingIdException extends IOException {
     public CrossingIdException() {
-        super();
+        super("Пересечение ID групп");
     }
 
     public CrossingIdException(String msg) {

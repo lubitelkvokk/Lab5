@@ -1,33 +1,31 @@
 
-import client.commands.AddCommand;
-import client.commands.HelpCommand;
-import client.commands.InfoCommand;
-import client.commands.Receiver;
-import client.executor.Executor;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import data.StudyGroup;
-import server.CollectionManager;
-import server.Reader;
-import server.ZonedDateTimeSerializer;
+import client.commands.*;
+import client.Receiver;
+import client.executor.CommandReader;
+import global.GlobalParmatters;
 
-import java.io.*;
-import java.time.ZonedDateTime;
+import java.io.IOException;
 
 public class Main {
+
     public static void main(String[] args) throws IOException {
-//        Reader reader = new Reader();
-//        CollectionManager cM = new CollectionManager(System.getenv("KVOKKA"), reader);
-//        Receiver user = new Receiver(new HelpCommand(cM), new AddCommand(cM), new InfoCommand(cM));
-//        Executor executor = new Executor(user, reader);
-//        executor.runInteractiveMode();
 
-        Gson gson = new GsonBuilder()
-                .setPrettyPrinting()
-                .registerTypeAdapter(ZonedDateTime.class, ZonedDateTime.now())
-                .create();
+        Command[] commands = new Command[]{new HelpCommand(), new AddCommand(),
+                new InfoCommand(), new UpdateCommand(), new RemoveCommand(),
+                new ClearCommand(), new SaveCommand()};
 
-        StudyGroup studyGroup = new StudyGroup();
+        Receiver user = new Receiver(commands, GlobalParmatters.cM);
+        CommandReader commandReader = new CommandReader(user, GlobalParmatters.reader);
+        commandReader.runInteractiveMode();
+
+
+//        GsonBuilder builder = new GsonBuilder();
+//        builder.registerTypeAdapter(StudyGroup.class, new CustomConverter());
+//        Gson gson = builder.create();
+////        System.out.println(gson.toJson(studyGroup));
+//        StudyGroup studyGroup = gson.fromJson("{\"id\":3,\"name\":\"PopIT\",\"coordinates\":{\"x\":25,\"y\":10.0},\"creationDate\":\"2023-02-23T18:21:35.597551+03:00[Europe/Moscow]\",\"groupAdmin\":{\"name\":\"Andrew\"},\"studentsCount\":7,\"shouldBeExpelled\":8,\"transferredStudents\":\"6\",\"semesterEnum\":\"SECOND\"}",
+//                StudyGroup.class);
+//        System.out.println(studyGroup);
 
     }
 }

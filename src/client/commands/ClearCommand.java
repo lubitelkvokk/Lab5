@@ -2,13 +2,18 @@ package client.commands;
 
 import server.CollectionManager;
 
-public class AddCommand implements Command {
+public class ClearCommand implements Command {
     private CollectionManager collectionManager;
-    private String name = "add";
-    public AddCommand() {
+    private String name = "clear";
+
+    public ClearCommand() {
     }
 
-    public AddCommand(CollectionManager collectionManager) {
+    @Override
+    public String getName() {
+        return name;
+    }
+    public ClearCommand(CollectionManager collectionManager) {
         this.collectionManager = collectionManager;
     }
 
@@ -18,14 +23,7 @@ public class AddCommand implements Command {
     }
 
     @Override
-    public String getName() {
-        return name;
-    }
-
-
-    @Override
     public void execute() {
-        collectionManager.add();
+        collectionManager.clear();
     }
-
 }

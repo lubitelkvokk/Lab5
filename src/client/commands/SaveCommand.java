@@ -2,13 +2,16 @@ package client.commands;
 
 import server.CollectionManager;
 
-public class AddCommand implements Command {
+public class SaveCommand implements Command {
+
+
     private CollectionManager collectionManager;
-    private String name = "add";
-    public AddCommand() {
+    private String name = "save";
+
+    public SaveCommand() {
     }
 
-    public AddCommand(CollectionManager collectionManager) {
+    public SaveCommand(CollectionManager collectionManager) {
         this.collectionManager = collectionManager;
     }
 
@@ -25,7 +28,6 @@ public class AddCommand implements Command {
 
     @Override
     public void execute() {
-        collectionManager.add();
+        collectionManager.save();
     }
-
 }

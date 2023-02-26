@@ -1,13 +1,12 @@
 package client.commands;
 
-import com.sun.source.tree.IfTree;
 import server.CollectionManager;
 
-public class InfoCommand implements Command {
+public class UpdateCommand implements Command {
     private CollectionManager collectionManager;
-    private String name = "info";
+    private String name = "update";
 
-    public InfoCommand() {
+    public UpdateCommand() {
 
     }
 
@@ -15,10 +14,9 @@ public class InfoCommand implements Command {
     public String getName() {
         return name;
     }
-    public InfoCommand(CollectionManager collectionManager) {
+    public UpdateCommand(CollectionManager collectionManager) {
         this.collectionManager = collectionManager;
     }
-
 
     public void setCollectionManager(CollectionManager collectionManager) {
         this.collectionManager = collectionManager;
@@ -26,6 +24,6 @@ public class InfoCommand implements Command {
 
     @Override
     public void execute() {
-        collectionManager.info();
+        collectionManager.update();
     }
 }

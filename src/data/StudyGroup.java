@@ -1,5 +1,7 @@
 package data;
 
+import data.exceptions.IdException;
+
 import java.time.ZonedDateTime;
 
 public class StudyGroup implements Comparable<StudyGroup> {
@@ -9,20 +11,108 @@ public class StudyGroup implements Comparable<StudyGroup> {
     private java.time.ZonedDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
     private long studentsCount; //Значение поля должно быть больше 0
     private long shouldBeExpelled; //Значение поля должно быть больше 0
-    private FormOfEducation formOfEducation; //Поле не может быть null
+    private int transferredStudents; //Значение поля должно быть больше 0
+
     private Semester semesterEnum; //Поле не может быть null
     private Person groupAdmin; //Поле не может быть null
 
-    public StudyGroup (){
-        creationDate = ZonedDateTime.now();
+    public StudyGroup(Integer id, String name,
+                      Coordinates coordinates,
+                      ZonedDateTime creationDate,
+                      long studentsCount, long shouldBeExpelled,
+                      int transferredStudents,
+                      Semester semesterEnum, Person groupAdmin) {
+        this.id = id;
+        this.name = name;
+        this.coordinates = coordinates;
+        this.creationDate = creationDate;
+        this.studentsCount = studentsCount;
+        this.shouldBeExpelled = shouldBeExpelled;
+        this.transferredStudents = transferredStudents;
+        this.semesterEnum = semesterEnum;
+        this.groupAdmin = groupAdmin;
     }
-    public Integer getId(){
+
+    public StudyGroup() {
+
+    }
+
+    public void setId(Integer id) throws IdException {
+        if (id <= 0){
+            throw new IdException();
+        }
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public void setCreationDate(ZonedDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public void setStudentsCount(long studentsCount) {
+        this.studentsCount = studentsCount;
+    }
+
+    public void setShouldBeExpelled(long shouldBeExpelled) {
+        this.shouldBeExpelled = shouldBeExpelled;
+    }
+
+    public void setTransferredStudents(int transferredStudents) {
+        this.transferredStudents = transferredStudents;
+    }
+
+    public int getTransferredStudents() {
+        return transferredStudents;
+    }
+
+    public void setSemesterEnum(Semester semesterEnum) {
+        this.semesterEnum = semesterEnum;
+    }
+
+    public void setGroupAdmin(Person groupAdmin) {
+        this.groupAdmin = groupAdmin;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public ZonedDateTime getCreationDate(){
+    public String getName() {
+        return name;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public ZonedDateTime getCreationDate() {
         return creationDate;
     }
+
+    public long getStudentsCount() {
+        return studentsCount;
+    }
+
+    public long getShouldBeExpelled() {
+        return shouldBeExpelled;
+    }
+
+
+    public Semester getSemesterEnum() {
+        return semesterEnum;
+    }
+
+    public Person getGroupAdmin() {
+        return groupAdmin;
+    }
+
 
     @Override
     public int compareTo(StudyGroup o) {
@@ -34,12 +124,12 @@ public class StudyGroup implements Comparable<StudyGroup> {
         return "StudyGroup{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", coordinates=" + coordinates +
+                ", coordinates=" + coordinates.toString() +
                 ", studentsCount=" + studentsCount +
                 ", shouldBeExpelled=" + shouldBeExpelled +
-                ", formOfEducation=" + formOfEducation +
+                ", transferredStudents=" + transferredStudents +
                 ", semesterEnum=" + semesterEnum +
-                ", groupAdmin=" + groupAdmin +
+                ", groupAdmin=" + groupAdmin.toString() +
                 '}';
     }
 }

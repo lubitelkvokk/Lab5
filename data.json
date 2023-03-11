@@ -10,8 +10,8 @@
     "groupAdmin": {
       "name": "Andrew",
       "height": 185,
-      "weight": 75,
       "passportID": "13435663773",
+      "eyeColor": "BLUE",
       "location": {
         "x": 24,
         "y": 46,

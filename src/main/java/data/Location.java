@@ -1,4 +1,4 @@
-package main.java.data;
+package data;
 
 public class Location {
     private float x;
@@ -30,6 +30,7 @@ public class Location {
     }
 
     public void setY(Float y) {
+
         this.y = y;
     }
 

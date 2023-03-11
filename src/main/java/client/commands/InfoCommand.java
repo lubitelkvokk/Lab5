@@ -1,7 +1,7 @@
-package main.java.client.commands;
+package client.commands;
 
 import com.sun.source.tree.IfTree;
-import main.java.server.CollectionManager;
+import server.CollectionManager;
 
 
 public class InfoCommand implements Command {

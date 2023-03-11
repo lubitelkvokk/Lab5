@@ -1,9 +1,10 @@
-package main.java.client.executor;
+package client.executor;
 
 
-import main.java.client.Receiver;
-import main.java.server.Reader;
 
+
+import client.*;
+import server.*;
 
 import java.io.IOException;
 
@@ -17,10 +18,14 @@ import java.io.IOException;
 public class CommandReader {
 
     Receiver receiver;
-    Reader reader;
+    IReader reader;
 
-    public CommandReader(Receiver receiver, Reader reader) {
+    public CommandReader(Receiver receiver, IReader reader) {
         this.receiver = receiver;
+        this.reader = reader;
+    }
+
+    public void setReader(IReader reader){
         this.reader = reader;
     }
 

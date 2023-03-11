@@ -1,8 +1,9 @@
-package main.java.server;
+package server;
 
 import com.google.gson.*;
-import main.java.data.*;
-import main.java.data.exceptions.WorldBorderException;
+import data.*;
+import data.exceptions.*;
+
 
 import java.lang.reflect.Type;
 import java.time.ZonedDateTime;
@@ -23,6 +24,7 @@ public class CustomConverter implements JsonSerializer<StudyGroup>, JsonDeserial
         o.addProperty("shouldBeExpelled", studyGroup.getShouldBeExpelled());
         o.addProperty("transferredStudents", studyGroup.getTransferredStudents());
         o.addProperty("semesterEnum", studyGroup.getSemesterEnum().toString());
+        o.addProperty("eyeColor", studyGroup.getGroupAdmin().getEyeColor().toString());
         o.add("groupAdmin", gson.toJsonTree(studyGroup.getGroupAdmin()));
         o.add("location", gson.toJsonTree(studyGroup.getGroupAdmin().getLocation()));
         return o;
@@ -47,7 +49,9 @@ public class CustomConverter implements JsonSerializer<StudyGroup>, JsonDeserial
         long shouldBeExpelled = jsonObject.get("shouldBeExpelled").getAsLong();
         int transferredStudents = jsonObject.get("transferredStudents").getAsInt();
         Semester semesterEnum = Semester.valueOf(jsonObject.get("semesterEnum").getAsString());
+        Color eyeColor = Color.valueOf(jsonObject.getAsJsonObject("groupAdmin").get("eyeColor").getAsString());
         Person groupAdmin = gson.fromJson(jsonObject.get("groupAdmin").getAsJsonObject(), Person.class);
+        groupAdmin.setEyeColor(eyeColor);
         groupAdmin.setLocation(gson.fromJson(jsonObject.get("groupAdmin").getAsJsonObject().get("location").getAsJsonObject(), Location.class));
         return new StudyGroup(id, name, coordinates,
                 zonedDateTime, studentsCount, shouldBeExpelled,

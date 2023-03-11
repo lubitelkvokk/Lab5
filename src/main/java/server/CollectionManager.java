@@ -1,20 +1,23 @@
-package main.java.server;
+package server;
 
 
-
+import client.Receiver;
+import client.executor.CommandReader;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import com.google.gson.Gson;
-import main.java.data.*;
-import main.java.data.exceptions.*;
-import main.java.server.CustomConverter;
+import data.*;
+import data.exceptions.*;
+import global.GlobalParmatters;
+
+
 import java.io.*;
 import java.lang.reflect.Type;
-import java.util.Collections;
-import java.util.LinkedList;
+import java.time.ZonedDateTime;
+import java.util.*;
 
 public class CollectionManager {
 
@@ -22,10 +25,19 @@ public class CollectionManager {
      * Поле списка учебных групп
      */
     LinkedList<StudyGroup> studyGroups;
-    Reader reader;
-    /**
-     * Поле сериализатора и десериализатора json
-     */
+    HashSet<Integer> freeId = new HashSet<>();
+
+
+    public Integer getFreeId() {
+        Integer id = (int) (Math.random() * Integer.MAX_VALUE);
+        while (freeId.contains(id)) {
+            id = (int) (Math.random() * Integer.MAX_VALUE);
+        }
+        return id;
+    }
+
+    IReader reader;
+
 
     private CollectionChecker collectionChecker = new CollectionChecker(this);
     Gson gson;
@@ -48,7 +60,7 @@ public class CollectionManager {
      *
      * @param path - путь к файлу
      */
-    public CollectionManager(String path, Reader reader) {
+    public CollectionManager(String path, IReader reader) {
         try {
             if (path == null) {
                 throw new NullPointerException("Переменной окружения с таким названием не существует");
@@ -56,7 +68,12 @@ public class CollectionManager {
             String s = Reader.readFromFile(path);
             Type t = new TypeToken<LinkedList<StudyGroup>>() {
             }.getType();
-            studyGroups = (LinkedList<StudyGroup>) gson.fromJson(s, t); //TODO Как происходит каст? Почему без бубна TreeMap? https://www.baeldung.com/gson-list
+            try {
+                studyGroups = gson.fromJson(s, t); //TODO Как происходит каст? Почему без бубна TreeMap? https://www.baeldung.com/gson-list
+            } catch (Exception e) {
+                System.out.println("Неверный формат JSON");
+            }
+
             for (StudyGroup group : studyGroups) {
                 IdContainer.container.add(group.getId());
             }
@@ -90,7 +107,7 @@ public class CollectionManager {
             e.printStackTrace();
         } catch (JsonParseException e) {
             System.out.println(e.getCause().getMessage());
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
@@ -114,25 +131,23 @@ public class CollectionManager {
 
 
     public void add() {
-        try {
-//            String json = reader.readElement();
+        //            String json = reader.readElement();
 //            StudyGroup obj = gson.fromJson(json, StudyGroup.class);
-            StudyGroup obj = reader.readElement(false);
-
-
-            studyGroups.add(obj);
-
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        StudyGroup obj = reader.readElement();
+        studyGroups.add(obj);
 
     }
 
+    ZonedDateTime zonedDateTime;
+
+    {
+        zonedDateTime = ZonedDateTime.now();
+    }
 
     public void info() {
-        System.out.println("Размер коллекции:" + studyGroups.size() + "\n"
-                + "Тип коллекции: " + studyGroups.getClass().getSimpleName() + "\n"
-                + studyGroups);
+        System.out.println("Тип коллекции: " + studyGroups.getClass().getSimpleName()
+                +"\nКоличество элементов в коллекции: " + studyGroups.size()
+                + "\nДата инициализации: " + zonedDateTime);
     }
 
     public void update() {
@@ -141,7 +156,7 @@ public class CollectionManager {
             for (int x = 0; x < studyGroups.size(); ++x) {
                 if (studyGroups.get(x).getId().equals(id)) {
 
-                    studyGroups.set(x, reader.readElement(false));
+                    studyGroups.set(x, reader.readElement());
                 }
             }
         } catch (Exception e) {
@@ -191,12 +206,20 @@ public class CollectionManager {
         }
     }
 
+    public void setReader(IReader reader) {
+        this.reader = reader;
+    }
+
     public void executeScript() {
         try {
-
-            reader.readScript(reader.readLine());
-
-
+            IReader temp = reader;
+            String path = reader.readLine();
+            reader = new Reader(path);
+            Receiver receiver = new Receiver(GlobalParmatters.commands, this);
+            CommandReader commandReader = new CommandReader(receiver, reader);
+            commandReader.runInteractiveMode();
+            reader.close();
+            reader = temp;
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -205,7 +228,7 @@ public class CollectionManager {
     public void exit() {
         System.out.println("-------END--------");
         try {
-            reader.bf.close();
+            reader.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -224,7 +247,7 @@ public class CollectionManager {
 
     public void addIfMin() {
         try {
-            StudyGroup studyGroup = reader.readElement(false);
+            StudyGroup studyGroup = reader.readElement();
             if (studyGroup.compareTo(Collections.min(studyGroups)) < 0) {
                 studyGroups.add(studyGroup);
             } else {
@@ -239,7 +262,7 @@ public class CollectionManager {
 
     public void remove_greater() {
         try {
-            StudyGroup studyGroup = reader.readElement(false);
+            StudyGroup studyGroup = reader.readElement();
             for (int x = 0; x < studyGroups.size(); ++x) {
                 if (studyGroups.get(x).compareTo(studyGroup) > 0) {
                     studyGroups.remove(x);
@@ -278,5 +301,9 @@ public class CollectionManager {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public void show() {
+        System.out.println(studyGroups);
     }
 }

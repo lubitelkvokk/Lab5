@@ -1,8 +1,8 @@
-package main.java.client;
+package client;
 
 
-import main.java.client.commands.Command;
-import main.java.server.CollectionManager;
+import client.commands.Command;
+import server.CollectionManager;
 
 
 import java.util.LinkedList;

@@ -1,14 +1,32 @@
-package main.java.data;
+package data;
 
-import server.exeptions.FormatElementException;
+
+import server.exeptions.*;
 
 public class Person {
-    private String name; //Поле не может быть null, Строка не может быть пустой
-    private Integer height; //Поле может быть null, Значение поля должно быть больше 0
-    private Integer weight; //Поле не может быть null, Значение поля должно быть больше 0
-    private String passportID; //Длина строки должна быть не меньше 10, Строка не может быть пустой, Поле не может быть null
 
-    private Location location;
+    private String name; //Поле не может быть null, Строка не может быть пустой
+    private long height; //Значение поля должно быть больше 0
+    private String passportID; //Значение этого поля должно быть уникальным, Длина строки не должна быть больше 21, Длина строки должна быть не меньше 6, Поле не может быть null
+
+    private Color eyeColor; //Поле не может быть null
+    private Location location; //Поле не может быть null
+
+    public Color getEyeColor() {
+        return eyeColor;
+    }
+
+    public void setHeight(long height) throws InputException {
+        if (height < 0) {
+            throw new InputException("Значение должно быть больше 0");
+        }
+        this.height = height;
+    }
+
+    public void setEyeColor(Color eyeColor) {
+        this.eyeColor = eyeColor;
+    }
+
     public Person() {
 
     }
@@ -29,13 +47,10 @@ public class Person {
         return name;
     }
 
-    public Integer getHeight() {
+    public long getHeight() {
         return height;
     }
 
-    public Integer getWeight() {
-        return weight;
-    }
 
     public String getPassportID() {
         return passportID;
@@ -45,13 +60,6 @@ public class Person {
         this.name = name;
     }
 
-    public void setHeight(Integer height) {
-        this.height = height;
-    }
-
-    public void setWeight(Integer weight) {
-        this.weight = weight;
-    }
 
     public void setPassportID(String passportID) throws FormatElementException {
         if (passportID.length() >= 21 && passportID.length() <= 6) {
@@ -65,8 +73,8 @@ public class Person {
         return "Person{" +
                 "name='" + name + '\'' +
                 ", height=" + height +
-                ", weight=" + weight +
                 ", passportID='" + passportID + '\'' +
+                ", eyeColor=" + eyeColor +
                 ", location=" + location +
                 '}';
     }

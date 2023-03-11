@@ -1,7 +1,7 @@
-package main.java.data;
+package data;
 
 
-import main.java.data.exceptions.IdException;
+import data.exceptions.*;
 
 import java.time.ZonedDateTime;
 
@@ -120,18 +120,20 @@ public class StudyGroup implements Comparable<StudyGroup> {
         return this.id - o.id;
     }
 
+
     @Override
     public String toString() {
         return "StudyGroup{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", coordinates=" + coordinates.toString() +
-                ", studentsCount=" + studentsCount +
-                ", shouldBeExpelled=" + shouldBeExpelled +
-                ", transferredStudents=" + transferredStudents +
-                ", semesterEnum=" + semesterEnum +
-                ", groupAdmin=" + groupAdmin.toString() +
-                '}';
+                "\n\t id=" + id +
+                ",\n\t name='" + name + '\'' +
+                ",\n\t coordinates=" + coordinates +
+                ",\n\t creationDate=" + creationDate +
+                ",\n\t studentsCount=" + studentsCount +
+                ",\n\t shouldBeExpelled=" + shouldBeExpelled +
+                ",\n\t transferredStudents=" + transferredStudents +
+                ",\n\t semesterEnum=" + semesterEnum +
+                ",\n\t groupAdmin=" + groupAdmin +
+                "\n\t}\n";
     }
 }
 

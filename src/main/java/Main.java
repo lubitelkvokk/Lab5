@@ -1,20 +1,30 @@
 package main.java;
 
 
-import main.java.client.Receiver;
-import main.java.client.executor.CommandReader;
-import main.java.global.GlobalParmatters;
+
+import client.Receiver;
+import client.executor.CommandReader;
+import global.GlobalParmatters;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
 
-
         Receiver user = new Receiver(GlobalParmatters.commands, GlobalParmatters.cM);
         CommandReader commandReader = new CommandReader(user, GlobalParmatters.reader);
         commandReader.runInteractiveMode();
+//        while (true){
+//            System.out.println(scanner.next());
+//            System.out.println(scanner.nextLine());
+//        }
+
+
+//        Receiver user = new Receiver(GlobalParmatters.commands, GlobalParmatters.cM);
+//        CommandReader commandReader = new CommandReader(user, GlobalParmatters.reader);
+//        commandReader.runInteractiveMode();
 
 
 //        GsonBuilder builder = new GsonBuilder();

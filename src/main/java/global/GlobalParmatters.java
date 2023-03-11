@@ -1,13 +1,15 @@
-package main.java.global;
+package global;
 
 
-import main.java.client.commands.*;
-import main.java.server.CollectionManager;
-import main.java.server.Reader;
+
+import client.commands.*;
+import server.*;
+
+import java.util.Scanner;
 
 
 public class GlobalParmatters {
-    public static Reader reader = new Reader();
+    public static IReader reader = new ReaderS(new Scanner(System.in));
 
     public static CollectionManager cM = new CollectionManager(System.getenv("KVOKKA"), reader);
 
@@ -16,5 +18,5 @@ public class GlobalParmatters {
             new ClearCommand(), new SaveCommand(), new ExecuteScriptCommand(), new ExitCommand(),
             new RemoveFirstCommand(), new AddIfMinCommand(), new RemoveGreaterCommand(),
             new SumExpelledCommand(), new AverageOfShouldBeExpelled(),
-            new MinByNameCommand()};
+            new MinByNameCommand(), new ShowCommand()};
 }

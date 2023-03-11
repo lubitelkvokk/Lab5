@@ -1,7 +1,8 @@
-package main.java.server;
+package server;
 
-import main.java.data.*;
-import main.java.data.exceptions.*;
+import data.StudyGroup;
+import data.exceptions.*;
+
 
 public class CollectionChecker {
     CollectionManager collectionManager;

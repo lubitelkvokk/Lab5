@@ -1,7 +1,7 @@
-package main.java.client.commands;
+package client.commands;
 
-import main.java.server.CollectionManager;
 
+import server.CollectionManager;
 
 public class SaveCommand implements Command {
 
